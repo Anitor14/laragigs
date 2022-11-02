@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,23 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//All Listings
+
 Route::get('/', function () {
     return view('listings', [
         'heading' => 'Latest Listings',
-        'listings' => [
-            [
-                'id' => 1,
-                'title' => 'Listing one',
-                "description" => "this is the first listing"
-            ],
-            [
-                'id' => 2,
-                'title' => 'Listing two',
-                "description" => "this is the second listing"
-            ]
-        ]
+        'listings' => Listing::all()
     ]);
 });
+
+Route::get('/listings/{id}', function ($id) {
+    return view('listing', [
+        "listing" => Listing::find($id)
+    ]);
+});
+//single Listing
+
 // //so we have our endpoints and our closure.
 // Route::get('/hello', function () {
 //     return response('<h1>hello world</h1>', 200)
